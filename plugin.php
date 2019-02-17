@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Stackable - Gutenberg Blocks
+ * Plugin Name: Stackable Tweaks - Gutenberg Blocks
  * Plugin URI: https://wpstackable.com
  * Description: Blocks for everyone
  * Author: Gambit Technologies, Inc

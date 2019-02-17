@@ -18,6 +18,12 @@ import ImageDesignList from './images/list.png'
 import { showProNotice } from 'stackable'
 import { withSelect } from '@wordpress/data'
 
+const postTypesList = [
+	{ value: 'post', label: __( 'Blog post' ) },
+	{ value: 'page', label: __( 'Pages' ) },
+	{ value: 'tribe_events', label: __( 'Events' ) },
+]
+
 const featuredImageShapes = [
 	{ value: 'full', label: __( 'Full-sized' ) },
 	{ value: 'square', label: __( 'Square' ) },
@@ -50,6 +56,7 @@ export const _edit = props => {
 		borderRadius,
 		shadow,
 		accentColor,
+		postsType,
 	} = attributes
 
 	const hasPosts = Array.isArray( latestPosts ) && latestPosts.length
@@ -113,6 +120,12 @@ export const _edit = props => {
 				{ showProNotice && <ProControl size="small" /> }
 			</DesignPanelBody>
 			<PanelBody title={ __( 'Posts Settings' ) }>
+				<SelectControl
+					label={ __( 'Post Type' ) }
+					options={ postTypesList }
+					value={ postsType }
+					onChange={ postsType => setAttributes( { postsType } ) }
+				/>
 				<QueryControls
 					{ ...{ order, orderBy } }
 					numberOfItems={ postsToShow }
@@ -316,7 +329,7 @@ export const _edit = props => {
 
 const edit = withSelect( ( select, props ) => {
 	const {
-		postsToShow, order, orderBy, categories,
+		postsToShow, order, orderBy, categories, postsType,
 	} = props.attributes
 	const { getEntityRecords } = select( 'core' )
 	const latestPostsQuery = pickBy( {
@@ -329,7 +342,7 @@ const edit = withSelect( ( select, props ) => {
 		per_page: 100, // eslint-disable-line camelcase
 	}
 	return {
-		latestPosts: getEntityRecords( 'postType', 'post', latestPostsQuery ),
+		latestPosts: getEntityRecords( 'postType', postsType, latestPostsQuery ),
 		categoriesList: getEntityRecords( 'taxonomy', 'category', categoriesListQuery ),
 	}
 } )( _edit )

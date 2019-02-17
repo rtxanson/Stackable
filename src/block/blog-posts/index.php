@@ -23,6 +23,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
     function stackable_render_blog_posts_block( $attributes ) {
         $recent_posts = wp_get_recent_posts(
             array(
+                'post_type' => ! empty( $attributes['postsType'] ) ? $attributes['postsType'] : '',
                 'numberposts' => ! empty( $attributes['postsToShow'] ) ? $attributes['postsToShow'] : '',
                 'post_status' => 'publish',
                 'order' => ! empty( $attributes['order'] ) ? $attributes['order'] : '',
@@ -259,6 +260,10 @@ if ( ! function_exists( 'stackable_register_blog_posts_block' ) ) {
                     ),
                     'categories' => array(
                         'type' => 'string',
+                    ),
+                    'postsType' => array(
+                        'type' => 'string',
+                        'default' => 'post',
                     ),
                     'postsToShow' => array(
                         'type' => 'number',
